@@ -1,0 +1,97 @@
+/* Modern dark glass + playful mascot styles */
+/* --- variables --- */
+:root{
+  --bg-1:#071021; --bg-2:#0f1720;
+  --glass: rgba(255,255,255,0.02); --glass-2: rgba(255,255,255,0.03);
+  --accent1:#3ee7c0; --accent2:#6c8cff;
+  --muted:#9aa6b2; --success:#2ecc71; --danger:#ff6b6b;
+  --card-radius:14px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter, Poppins, system-ui,-apple-system, "Segoe UI", Roboto; background:radial-gradient(1200px 600px at 10% 10%, rgba(78,205,196,0.04), transparent), linear-gradient(180deg,var(--bg-1),var(--bg-2)); color:#e6eef6; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
+
+/* decorative orbs */
+.orb{ position:fixed; pointer-events:none; filter:blur(24px); opacity:0.8; transition:transform .12s linear; z-index:0; }
+.orb-1{ width:300px;height:300px; left:-80px; top:8%; background:radial-gradient(circle at 30% 30%, #6c8cff, rgba(108,140,255,0.06)); }
+.orb-2{ width:220px;height:220px; right:-60px; top:28%; background:radial-gradient(circle at 70% 70%, #3ee7c0, rgba(62,231,192,0.06)); }
+.orb-3{ width:160px;height:160px; left:12%; bottom:-60px; background:radial-gradient(circle at 50% 50%, #ff8ab8, rgba(255,138,184,0.04)); }
+
+/* topbar */
+.topbar{ width:100%; display:flex; justify-content:space-between; align-items:center; padding:16px 20px; z-index:6; position:relative; }
+.brand{ display:flex; align-items:center; gap:12px; }
+.logo{ width:48px;height:48px;border-radius:10px; display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0c1220,#091022); border:1px solid rgba(255,255,255,0.03); color:var(--accent1); font-weight:700; box-shadow: inset 0 2px 10px rgba(0,0,0,0.45); }
+.title{ font-weight:600; font-size:14px; color:#dfe9f3; }
+
+/* buttons */
+.btn{ padding:8px 12px; border-radius:10px; border:none; cursor:pointer; background:rgba(255,255,255,0.02); color:inherit; font-weight:700; transition:transform .12s ease, box-shadow .12s linear; box-shadow: 0 8px 30px rgba(2,6,23,0.45); }
+.btn.small{ padding:6px 10px; font-size:13px; border-radius:999px; }
+.btn.primary{ background: linear-gradient(90deg,var(--accent1),var(--accent2)); color:#04121a; }
+.btn.danger{ background: linear-gradient(90deg,#ff6b6b,#ff8a8a); color:#1b0f0f; }
+.btn:active{ transform:translateY(1px) scale(.997); }
+
+/* app layout */
+.app{ width:100%; max-width:1100px; margin:22px auto; padding:0 18px 72px; z-index:4; position:relative; }
+.glass{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.04); border-radius:var(--card-radius); backdrop-filter: blur(8px) saturate(120%); padding:16px; box-shadow: 0 8px 40px rgba(2,6,23,0.6); }
+
+/* hero */
+.hero{ display:flex; gap:18px; align-items:stretch; padding:20px; }
+.hero-left{ flex:1.1; display:flex; flex-direction:column; gap:14px; }
+.hero-right{ flex:0.9; display:flex; align-items:center; justify-content:center; min-height:260px; }
+
+/* text */
+h1{ margin:0;font-size:26px;line-height:1.05;color:#eaf6ff;}
+.accent{ background:linear-gradient(90deg,var(--accent1),var(--accent2)); -webkit-background-clip:text; color:transparent; font-weight:800; font-size:28px; }
+.muted{ color:var(--muted); margin:0; font-size:14px; }
+
+/* quote */
+.quote-box{ display:flex; flex-direction:column; gap:6px; padding:12px; }
+#quoteText{ font-style:italic; color:#dff7f0; margin:0; font-size:15px; }
+#quoteAuthor{ text-align:right; font-weight:700; color:var(--muted); font-size:13px; }
+
+/* inputs */
+.input-row{ display:flex; gap:10px; align-items:end; margin-top:8px; }
+.field{ display:flex; flex-direction:column; gap:6px; flex:1; }
+.field label{ font-size:13px; color:var(--muted); }
+.field input{ padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.03); background:transparent; color:inherit; font-weight:700; outline:none; font-size:16px; }
+.field input::placeholder{ color:#c8d6e3; font-weight:500; }
+.field input:focus{ box-shadow: 0 8px 30px rgba(78,205,196,0.06); border-color: rgba(78,205,196,0.14); }
+
+/* actions */
+.actions{ display:flex; gap:8px; align-items:center; }
+
+/* summary */
+.summary-card{ margin-top:8px; padding:12px; display:flex; flex-direction:column; gap:6px; }
+.summary-card h3{ margin:0; font-size:18px; color:#dff7f0; }
+.summary-card p{ margin:0; color:var(--muted); }
+
+/* entries */
+.entries-panel{ margin-top:18px; padding:12px; }
+.entries-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.table-wrap{ overflow:auto; max-height:320px; }
+table{ width:100%; border-collapse:collapse; color:#e8f2ff; min-width:680px; }
+th,td{ padding:10px 8px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.03); font-size:14px; }
+th{ color:var(--muted); font-weight:700; background:transparent; }
+.good{ color:var(--success); font-weight:800; }
+.bad{ color:var(--danger); font-weight:800; }
+
+/* mascot */
+.mascot{ position:fixed; right:18px; bottom:18px; width:92px; height:92px; z-index:9; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:4px; }
+.mascot svg{ width:84px; height:84px; transition:transform .35s cubic-bezier(.2,.9,.2,1); filter: drop-shadow(0 10px 18px rgba(2,6,23,0.6)); border-radius:16px; }
+.mascot-badge{ background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:#04121a; padding:6px 10px; border-radius:999px; font-weight:800; font-size:12px; transform:translateY(-6px); box-shadow: 0 10px 24px rgba(62,231,192,0.08); }
+
+/* modal */
+.modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:40; }
+.modal[aria-hidden="false"]{ display:flex; }
+.modal-content{ width:94%; max-width:420px; padding:16px; position:relative; }
+.modal-content h3{ margin:0 0 8px 0; }
+.modal-content p{ margin:0 0 12px 0; color:var(--muted); }
+
+/* responsive */
+@media (max-width:900px){
+  .hero{ flex-direction:column; }
+  .hero-right{ order:2; width:100%; }
+  table{ min-width:unset; font-size:13px; }
+  .orb-1,.orb-2,.orb-3{ display:none; }
+  .mascot{ right:12px; bottom:12px; transform-origin:center; }
+}

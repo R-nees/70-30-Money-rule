@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>70/30 Discipline Tracker — Interactive</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0f1720" />
+
+  <!-- Icons (place your icons/icons-192.png & icons-512.png in icons/) -->
+  <link rel="icon" href="icons/icon-192.png" />
+
+  <!-- Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Decorative orbs (parallax) -->
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-2" aria-hidden="true"></div>
+  <div class="orb orb-3" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">70/30</div>
+      <div class="title">Discipline Tracker</div>
+    </div>
+    <div class="controls">
+      <button id="themeBtn" class="btn small" aria-label="Toggle theme">🌙 Dark Mode</button>
+    </div>
+  </header>
+
+  <main class="app" id="appRoot">
+    <section class="hero glass">
+      <div class="hero-left">
+        <h1>Build Discipline<br /><span class="accent">Use ≤ 70% of your income</span></h1>
+        <p class="muted">Track entries, set goals, and celebrate progress. Data stays private on your device.</p>
+
+        <div class="quote-box glass" id="quoteBox" role="region" aria-label="Quote">
+          <blockquote id="quoteText">Loading wisdom...</blockquote>
+          <div id="quoteAuthor">— Jim Rohn</div>
+        </div>
+
+        <div class="input-row glass" role="form" aria-label="Add entry">
+          <div class="field">
+            <label for="income">Income</label>
+            <input id="income" type="number" placeholder="e.g. 1500" inputmode="numeric" autocomplete="off" />
+          </div>
+          <div class="field">
+            <label for="spent">Spent</label>
+            <input id="spent" type="number" placeholder="e.g. 900" inputmode="numeric" autocomplete="off" />
+          </div>
+          <div class="actions">
+            <button id="saveEntry" class="btn primary">Save Entry</button>
+          </div>
+        </div>
+
+        <div id="summary" class="glass summary-card" aria-live="polite"></div>
+      </div>
+
+      <div class="hero-right">
+        <canvas id="progressChart" aria-label="Progress chart"></canvas>
+      </div>
+    </section>
+
+    <section class="entries-panel glass">
+      <div class="entries-header">
+        <h2>Your Entries</h2>
+        <div class="entry-actions">
+          <button id="exportCsv" class="btn small">Export CSV</button>
+          <button id="clearAll" class="btn danger small">Clear All</button>
+        </div>
+      </div>
+
+      <div class="table-wrap" role="table" aria-label="Entries table">
+        <table id="entriesTable" >
+          <thead>
+            <tr>
+              <th>Date</th><th>Income</th><th>Spent</th><th>Allowed (70%)</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Mascot: small animated cartoon person (inline SVG) -->
+  <div id="mascot" class="mascot" role="button" tabindex="0" aria-label="Mascot — click for encouragement">
+    <!-- Simple SVG cartoon person (face + body) -->
+    <svg viewBox="0 0 120 120" width="84" height="84" aria-hidden="true">
+      <!-- shadow -->
+      <ellipse cx="60" cy="102" rx="26" ry="6" fill="#000" opacity="0.12"/>
+      <!-- body -->
+      <g id="body">
+        <path d="M60 40c-9 0-16 7-16 16v14c0 8 7 15 16 15s16-7 16-15V56c0-9-7-16-16-16z" fill="#6c8cff"/>
+        <rect x="46" y="64" width="28" height="12" rx="6" fill="#2a3a6f" opacity="0.85"/>
+      </g>
+      <!-- head -->
+      <g id="head">
+        <circle cx="60" cy="30" r="18" fill="#ffd7a6"/>
+        <!-- glasses -->
+        <rect x="46" y="26" width="7" height="6" rx="2" fill="#0b1220"/>
+        <rect x="67" y="26" width="7" height="6" rx="2" fill="#0b1220"/>
+        <line x1="53" y1="29" x2="67" y2="29" stroke="#0b1220" stroke-width="1.5" />
+        <!-- smile -->
+        <path d="M52 36 q8 6 16 0" fill="transparent" stroke="#0b1220" stroke-width="1.6" stroke-linecap="round"/>
+      </g>
+      <!-- arm (waving) -->
+      <g id="arm" transform="translate(10,15)">
+        <path d="M52 52 q-8 6 -14 0" stroke="#ffd7a6" stroke-width="6" stroke-linecap="round" fill="none"/>
+      </g>
+    </svg>
+    <div class="mascot-badge">Hi!</div>
+  </div>
+
+  <!-- Encouragement modal -->
+  <div id="encourageModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content glass">
+      <button id="closeModal" class="btn small" aria-label="Close">✕</button>
+      <h3 id="modalTitle">Nice work! 🎉</h3>
+      <p id="modalBody">You stayed within your 70% — keep it up!</p>
+      <button id="modalOk" class="btn primary">Thanks</button>
+    </div>
+  </div>
+
+  <!-- Service worker registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js').catch(console.error);
+    }
+  </script>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
+
+

@@ -1,48 +1,25 @@
-// This is the "Offline page" service worker
+const CACHE_NAME = "7030-static-v1";
+const ASSETS = [
+  "./",
+  "./index.html",
+  "./style.css",
+  "./script.js",
+  "./manifest.json",
+  "https://cdn.jsdelivr.net/npm/chart.js",
+  "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js",
+  "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"
+];
 
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
-
-const CACHE = "pwabuilder-page";
-
-// TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "offline.html";
-const offlineFallbackPage = "ToDo-replace-this-name.html";
-
-self.addEventListener("message", (event) => {
-  if (event.data && event.data.type === "SKIP_WAITING") {
-    self.skipWaiting();
-  }
+self.addEventListener("install", (ev) => {
+  ev.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)).catch(()=>{}));
+  self.skipWaiting();
+});
+self.addEventListener("activate", (ev) => {
+  ev.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => k !== CACHE_NAME ? caches.delete(k) : null))));
+  self.clients.claim();
+});
+self.addEventListener("fetch", (ev) => {
+  ev.respondWith(caches.match(ev.request).then(res => res || fetch(ev.request).catch(()=>caches.match("./"))));
 });
 
-self.addEventListener('install', async (event) => {
-  event.waitUntil(
-    caches.open(CACHE)
-      .then((cache) => cache.add(offlineFallbackPage))
-  );
-});
-
-if (workbox.navigationPreload.isSupported()) {
-  workbox.navigationPreload.enable();
-}
-
-self.addEventListener('fetch', (event) => {
-  if (event.request.mode === 'navigate') {
-    event.respondWith((async () => {
-      try {
-        const preloadResp = await event.preloadResponse;
-
-        if (preloadResp) {
-          return preloadResp;
-        }
-
-        const networkResp = await fetch(event.request);
-        return networkResp;
-      } catch (error) {
-
-        const cache = await caches.open(CACHE);
-        const cachedResp = await cache.match(offlineFallbackPage);
-        return cachedResp;
-      }
-    })());
-  }
-});
 

@@ -1,14 +1,67 @@
 {
-  "name": "70/30 Discipline Tracker",
-  "short_name": "70/30 Tracker",
-  "start_url": "./index.html",
+  "id": "com.seventyThirtyRule.app",
+  "name": "70/30 Rule — Money Discipline Tracker",
+  "short_name": "70/30 Rule",
+  "description": "Build financial discipline with Jim Rohn’s 70/30 principle. Spend 70%, grow 30%. Fun, motivating & habit-forming.",
+  "start_url": "/index.html",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#0f1720",
-  "theme_color": "#0f1720",
-  "description": "Practice Jim Rohn's 70/30 rule. Track income, spending, and build good habits.",
+  "display_override": ["window-controls-overlay", "fullscreen"],
+  "orientation": "portrait",
+  "background_color": "#000A14",
+  "theme_color": "#00B4FF",
+  "lang": "en",
+  "dir": "ltr",
   "icons": [
-    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
-  ]
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/maskable_icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/screen1.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Track your 70/30 savings and spending habits"
+    },
+    {
+      "src": "/screenshots/screen2.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Visualize progress and stay disciplined"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Add New Entry",
+      "short_name": "Add Entry",
+      "description": "Log new income or spending session",
+      "url": "/index.html#add"
+    },
+    {
+      "name": "View Progress",
+      "short_name": "Progress",
+      "description": "Open your 70/30 progress tracker",
+      "url": "/index.html#progress"
+    }
+  ],
+  "categories": ["finance", "productivity", "education"],
+  "prefer_related_applications": false
 }
+
 

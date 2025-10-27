@@ -131,16 +131,16 @@
 
   <!-- Service worker registration -->
   <script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/service-worker.js")
-    .then(() => console.log("Service Worker Registered ✔️"));
-}
-</script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js').catch(console.error);
+    }
+  </script>
 
 
   <script src="script.js" defer></script>
 </body>
 </html>
+
 
 
 
